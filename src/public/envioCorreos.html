@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email de Verificación</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="container">
+
+        <h1>Hola ${nombre} bienvenido </h1>
+         <p class="text">Comprueba tu cuenta en ViajeSeguro</p>
+            <p>Tu cuenta ya esta casi lista solo debes comprobar tu cuenta en el
+            siguiente enlace: <a href="${process.env.URL_CONFIRMAR}/confirmar/${token}">Comprobar Cuenta</a></p>
+        <img src="./images/Logo-ViajeSeguro.svg" alt="Logo">
+        
+    </div>
+</body>
+</html>

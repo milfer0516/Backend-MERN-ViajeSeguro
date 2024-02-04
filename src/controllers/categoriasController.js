@@ -7,6 +7,7 @@ export const crearCategoria = async (req=request, res=response, next) => {
     try {
         
         const nuevaCategoria = new Categoria(req.body);
+        //console.log(nuevaCategoria)
         const guardarCategoria = await nuevaCategoria.save();
 
         res.status(200).json({
@@ -53,9 +54,11 @@ export const deleteCategoria = async (req=request, res=response, next) => {
     return res.sendStatus(204);
 }
 
+//Update Categoria
 export const updateCategoria = async (req=request, res=response, next) => {
 
     try {
+        
         const categoriaId = req.params.id;
         const categoria = await Categoria.findByIdAndUpdate(categoriaId,
             { $set: req.body },

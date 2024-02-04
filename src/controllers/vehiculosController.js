@@ -9,6 +9,15 @@ export const getAllVehiculos = async (req=request, res=response, next) => {
     try {
 
         const vehiculos = await Vehiculo.find().populate('categoria');
+        for(const vehiculo of vehiculos) {
+            //console.log(vehiculo)
+            const categoria = await Categoria.findById(vehiculo.categoria);
+            //console.log("Obteniendo Categorias: ",categoria.nombreCategoria);
+            categoria.vehiculos.push(vehiculo._id);
+            //console.log("Agregando a categoria el ID del Vehiculo", categoria);
+            categoria.save();
+            console.log('Colección Categoria actualizada');
+        }
         res.status(200).json(vehiculos);
 
     } catch (error) {

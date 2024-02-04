@@ -24,7 +24,17 @@ const CategoriaSchema = new Schema({
         type: Number,
         required: true, 
         trim: true,
-    }
+    },
+    vehiculos: [{
+        type: Schema.Types.ObjectId, 
+        ref: 'Vehiculo'
+    }]
 });
 
-export default mongoose.model("Categoria", CategoriaSchema)
+export default mongoose.model("Categoria", CategoriaSchema);
+
+// Actualiza la colección Categoria
+/* (async () => {
+categoriaId.set({}, { $set: { vehiculos: [] } });
+console.log('Colección Categoria actualizada');
+})(); */

@@ -1,2 +1,2 @@
-export const tokenMabBox = process.env.MAPBOX_TOKEN
+export const tokenMabBox = "pk.eyJ1IjoibWlsZmVyMTYiLCJhIjoiY2xyd3Fub2F3MHI2bDJrcGdhYjMxb2liYiJ9.DAWRcin7uu6LHRY8KKmzQA"
 

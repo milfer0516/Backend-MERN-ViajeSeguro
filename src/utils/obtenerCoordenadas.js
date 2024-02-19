@@ -1,9 +1,10 @@
 import mapbox from '@mapbox/mapbox-sdk';
 import geocoding from "@mapbox/mapbox-sdk/services/geocoding.js"
 import directions from "@mapbox/mapbox-sdk/services/directions.js";
+import { tokenMabBox } from '../middlewares/tokenMapBox.js';
 
 //const accessToken = process.env.MAPBOX_TOKEN
-const mapboxClient = mapbox({ accessToken: "pk.eyJ1IjoibWlsZmVyMTYiLCJhIjoiY2xtcWl0Z2U3MDM0czJqcGNiMnpvdXU0MiJ9.JZA1v7t_1ubBSiJeGQ3Xwg" });
+const mapboxClient = mapbox({ accessToken: tokenMabBox });
 
 // Configura el cliente de direcciones
 const directionsClient = directions(mapboxClient);

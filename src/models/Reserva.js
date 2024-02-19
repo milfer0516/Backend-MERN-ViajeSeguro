@@ -7,9 +7,9 @@ const ReservaSchema = new Schema({
         ref: 'Usuario' 
     },
     
-    vehiculo: { 
+    categoria: { 
         type: Schema.Types.ObjectId, 
-        ref: 'Vehiculo' 
+        ref: 'Categoria' 
     },
     fechaInicio: {
         type: Date,
@@ -62,15 +62,6 @@ const ReservaSchema = new Schema({
     
 );
 
-/* ReservaSchema.virtual('fechaInicio')
-.set(function(fecha) {
-    // El formato esperado es 'yyyy-mm-dd' que es el devuelto por el campo input
-    // el valor recibido se almacenará en el campo fecha_nacimiento_iso de nuestro documento
-    this.fechaInicioISO = new Date(fecha)
-}).get(function() {
-    // el valor devuelto será un string en formato 'yyyy-mm-dd'
-    return this.fechaInicioISO.toISOString().substring(0,10);
-}) */
 
 
 export default mongoose.model("Reserva", ReservaSchema);

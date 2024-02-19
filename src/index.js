@@ -11,14 +11,14 @@ import routerUsers from "./routes/usuariosRoute.js";
 import routerCategoria from "./routes/categoriasRoute.js";
 import routerReserva from './routes/reservasRouter.js'
 import handlerError from './middlewares/handlerErrors.js';
+dotEnv.config()
 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-dotEnv.config()
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3500 ;
 
 // Connection DB
 connectionDB();

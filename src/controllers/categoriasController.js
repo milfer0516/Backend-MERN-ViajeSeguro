@@ -25,12 +25,17 @@ export const getAllCategorias = async (req=request, res=response, next) => {
     try {
 
         const categoria = await Categoria.find();
-        return res.status(200).json(categoria)
+        //console.log(categoria);
+        return res.status(200).json({
+            categoria
+        });
+
         
     } catch (error) {
         next(error)
     }
-}
+};
+
 export const getCategoriaById = async (req=request, res=response, next) => {
     
     try {

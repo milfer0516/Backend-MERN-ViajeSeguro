@@ -4,8 +4,7 @@ import moment from 'moment';
 import Reserva from '../models/Reserva.js';
 import Categoria from '../models/Categoria.js'
 import { createError } from '../utils/error.js';
-//import { obtenerDirecciones } from '../utils/obtenerCoordenadas.js';
-//import { obtenerTiempoDistancia } from '../utils/obtenerTiempo.js';
+
 
 /**
  * Creates a new reservation.

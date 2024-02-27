@@ -4,8 +4,8 @@ import moment from 'moment';
 import Reserva from '../models/Reserva.js';
 import Categoria from '../models/Categoria.js'
 import { createError } from '../utils/error.js';
-import { obtenerDirecciones } from '../utils/obtenerCoordenadas.js';
-import { obtenerTiempoDistancia } from '../utils/obtenerTiempo.js';
+//import { obtenerDirecciones } from '../utils/obtenerCoordenadas.js';
+//import { obtenerTiempoDistancia } from '../utils/obtenerTiempo.js';
 
 /**
  * Creates a new reservation.
@@ -15,22 +15,20 @@ import { obtenerTiempoDistancia } from '../utils/obtenerTiempo.js';
  * @param {function} next - The next middleware function.
  */
 export const crearReserva = async (req = request, res = response, next) => {
+
     const { categoria, horaReserva, fechaInicio, fechaFin, destinoInicial, destinoFinal, estado } = req.body;
 
     const { ObjectId } = mongoose.Types
     
     try {
-         
-        if(!categoria) {
-            return next(createError(400, "Debes proporcionar una categoria válida"))
-        }
-
+        
         const categoriID = new ObjectId(categoria)
         const categoriaFound = await Categoria.findById(categoriID);
-        console.log("Categoria encontrada: ",categoriaFound)
-        
-        const userId = req.user.id;
+        if( !categoriaFound ) {
+            return next(createError(400, "La categoria seleccionado no existe!"));
+        }
 
+        const userId = req.user.id;
         if (!userId) {
             return next(createError(400, "Usuario no existe"));
         }
@@ -48,41 +46,24 @@ export const crearReserva = async (req = request, res = response, next) => {
             destinoInicial,
             destinoFinal,
             estado,
+            coordenadasInicio: [],
+            coordenadasFinales:[],
+            tiempoRecorrido: [],
+            distancia: []
         });
-        
 
-        reserva.destinoInicial = destinoInicial
-        reserva.destinoFinal = destinoFinal
-        const respuestaCoordenadas = await obtenerDirecciones(destinoInicial, destinoFinal);
+       if( reserva.coordenadasInicio  && reserva.coordenadasFinales ) {
+            reserva.coordenadasInicio = req.body.coordenadasInicio
+            reserva.coordenadasFinales = req.body.coordenadasFinales
+       }
 
-        //console.log("respuestaCoordenadas: ",respuestaCoordenadas)
-
-        if (respuestaCoordenadas && respuestaCoordenadas.body) {
-            //console.log('Respuesta Coordenadas:', respuestaCoordenadas.body);
-
-            // Resto del código aquí
-            const distanciaTotal = Math.ceil(respuestaCoordenadas.body.routes[0].distance / 1000);
-            const { horas, minutos } = obtenerTiempoDistancia(respuestaCoordenadas.body.routes[0].duration);
-        
-            /* The code `reserva.coordenadasInicio = respuestaCoordenadas.body.waypoints[0].location;`
-            is assigning the starting coordinates of the route to the `coordenadasInicio` property
-            of the `reserva` object. */
-            reserva.coordenadasInicio = respuestaCoordenadas.body.waypoints[0].location;
-            reserva.coordenadasFinales = respuestaCoordenadas.body.waypoints[1].location;
-            
-            reserva.distancia = distanciaTotal;
-            reserva.tiempoRecorrido = [horas, minutos];
-            console.log("Reserva solicitada: ",reserva);
-            
-
-        } else {
-            console.error('La respuesta de coordenadas es nula o no tiene cuerpo.');
-            // Puedes manejar este caso según tus necesidades
-            return next(createError(400, "No hay rutas disponibles para las coordenadas proporcionadas"));
-        }
+       if( reserva.distancia && reserva.tiempoRecorrido ) {
+            reserva.tiempoRecorrido = req.body.tiempoRecorrido;
+            reserva.distancia = req.body.distancia;
+       }
 
         const nuevaReserva = await reserva.save();
-        console.log("Reserva Nueva: ",nuevaReserva);
+        //console.log("Reserva Nueva: ",nuevaReserva);
         res.status(201).json(nuevaReserva);
 
     } catch (error) {
@@ -138,7 +119,7 @@ export const getByIdReserva = async (req=request, res=response, next) => {
 export const updateReserva = async(req=request, res=response, next) => {
 
     const { id } = req.params
-    const { body } = req.body
+    const { body } = req
     try {
 
         const reservaActualizada = await Reserva.findByIdAndUpdate(id,

@@ -16,11 +16,9 @@ import { createError } from '../utils/error.js';
 export const crearReserva = async (req = request, res = response, next) => {
 
     const { categoria, horaReserva, fechaInicio, fechaFin, destinoInicial, destinoFinal, estado } = req.body;
-
     const { ObjectId } = mongoose.Types
     
     try {
-        
         const categoriID = new ObjectId(categoria)
         const categoriaFound = await Categoria.findById(categoriID);
         if( !categoriaFound ) {

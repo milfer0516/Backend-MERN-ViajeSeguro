@@ -20,6 +20,7 @@ export const crearCategoria = async (req=request, res=response, next) => {
     }
 }
 
+//Obtener todas las Categorias
 export const getAllCategorias = async (req=request, res=response, next) => {
 
     try {
@@ -36,6 +37,7 @@ export const getAllCategorias = async (req=request, res=response, next) => {
     }
 };
 
+// Obtener Categorias X ID
 export const getCategoriaById = async (req=request, res=response, next) => {
     
     try {

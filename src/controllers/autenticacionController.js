@@ -136,7 +136,6 @@ const nuevoPassword = async (req=request, res=response, next) => {
 const perfilUsuario = async (req=request, res=response, next) => {
     const { user } = req
 
-    
     const usuario = await Usuario.findById(  user.id  )
     if(usuario === " ") return next(createError(400, "Todos los campos son abligatorios"));
     if(!usuario) return next(createError(400, "Usuario con el ID no esta registrado"));

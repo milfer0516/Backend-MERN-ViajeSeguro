@@ -73,8 +73,7 @@ export const deleteUser = async (req=request, res=response, next) => {
 
         /* Aca para mejor manejo de la consistencia de los datos no se debe borrar un usuario de una DB la mejor es manejar un estado de activo=true o inactivo=false */
         //const usuarioDeleted = await Usuario.findOne({estado})
-        const usuario = await Usuario.findById(
-            id);
+        const usuario = await Usuario.findById(id);
             
         if( !usuario ) return next(createError(400, "Usuario no encontrado."));
         if( !usuario.estado ) return next(createError(400, "Usuario ya no esta activo."));

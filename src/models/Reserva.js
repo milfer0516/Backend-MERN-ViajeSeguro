@@ -29,7 +29,7 @@ const ReservaSchema = new Schema({
         required: true,
     },
     distancia: {
-        type: Number,
+        type: [Number],
         trim: true,
     },
     tiempoRecorrido: {
@@ -39,7 +39,7 @@ const ReservaSchema = new Schema({
     },
     coordenadasInicio: {
         type: [Number],
-        index: '2dsphere'
+        required: true
     },
     destinoFinal: {
         type: String,
@@ -48,7 +48,7 @@ const ReservaSchema = new Schema({
     },
     coordenadasFinales: {
       type: [Number],
-      index: '2dsphere'
+      required: true
   },
     estado: {
         type: Boolean,

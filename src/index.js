@@ -28,8 +28,7 @@ const whiteList = [ process.env.FRONTEND_URL ];
 
 //middlewares
 app.use(cors({
-    origin: whiteList,
-    credentials: true
+    origin: process.env.FRONTEND_URL,
 }));
 
 app.use(cookieParser());

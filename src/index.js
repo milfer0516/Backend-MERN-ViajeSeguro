@@ -24,12 +24,10 @@ const PORT = process.env.PORT || 3500 ;
 connectionDB();
 
 // Configuracion CORS
-const whiteList = [ process.env.FRONTEND_URL ];
+//const whiteList = [ process.env.FRONTEND_URL ];
 
 //middlewares
-app.use(cors({
-    origin: whiteList,
-}));
+app.use(cors());
 
 app.use(cookieParser());
 

@@ -1,19 +1,25 @@
 import  { request, response } from 'express'
 import Categoria from "../models/Categoria.js";
+import Vehiculo from '../models/Vehiculo.js';
 
 //Crear una Categoria
 export const crearCategoria = async (req=request, res=response, next) => {
     
     try {
-        
         const nuevaCategoria = new Categoria(req.body);
-        //console.log(nuevaCategoria)
-        const guardarCategoria = await nuevaCategoria.save();
+
+        const categoriaSinVehiculos = await nuevaCategoria.save();
+
+        const vehiculosIds = req.body.vehiculos;
+
+        vehiculosIds.forEach((vehiculoId) => {
+        categoriaSinVehiculos.vehiculos.push(vehiculoId);
+        });
 
         res.status(200).json({
             message: "Se creo la categoria con exito",
-            guardarCategoria
-        })
+            categoriaSinVehiculos,
+        });
         
     } catch (error) {
         next(error)
@@ -25,7 +31,7 @@ export const getAllCategorias = async (req=request, res=response, next) => {
 
     try {
 
-        const categoria = await Categoria.find();
+        const categoria = await Categoria.find().populate('vehiculos');
         //console.log(categoria);
         return res.status(200).json({
             categoria
@@ -42,7 +48,7 @@ export const getCategoriaById = async (req=request, res=response, next) => {
     
     try {
         const categoriaId = req.params.id;
-        const categoria = await Categoria.findById(categoriaId);
+        const categoria = await Categoria.findById(categoriaId).populate('vehiculos');
 
         if(!categoria) return res.status(404).json("Categoria no encontrada");
 

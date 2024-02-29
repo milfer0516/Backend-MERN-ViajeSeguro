@@ -24,7 +24,8 @@ const VehiculoSchema = new Schema({
         enum: ["Disponible", "Reservado", "Fuera de Servicio"],
         default: "Disponible"
     },
-    categoria : { 
+    
+    categoriaId : { 
         type: Schema.Types.ObjectId, 
         ref: 'Categoria'
     },

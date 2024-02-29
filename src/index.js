@@ -28,7 +28,7 @@ const whiteList = [ process.env.FRONTEND_URL ];
 
 //middlewares
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: whiteList,
 }));
 
 app.use(cookieParser());
@@ -36,6 +36,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://viaje-seguro.vercel.app'); // Reemplaza con el origen de tu aplicación Vercel
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Ajusta los métodos permitidos según sea necesario
@@ -43,7 +44,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
 
 //Routes
 app.use("/api/vehiculos", routerVehiculos);
